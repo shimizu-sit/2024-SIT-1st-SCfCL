@@ -39,8 +39,8 @@ paginate: true
 
 シラバスを見ながら確認をおこないます．
 
-Web版：（シラバスURL貼付）
-PDF版：（MoodleURL貼付）
+Web版：https://moodle2024.shonan-it.ac.jp/mod/url/view.php?id=8670
+PDF版：https://moodle2024.shonan-it.ac.jp/mod/resource/view.php?id=8671
 
 
 ---
