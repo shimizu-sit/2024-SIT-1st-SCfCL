@@ -593,4 +593,4 @@ my_dict = {'tea' : 100, 'coffee' : 200, 'milk' : 300} # dict型の作成
 - Moodleにある「SCfCL-2nd-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした.ipynbファイルをMoodleに提出してください
-- 提出期限は4月18日(木) 20時までです
+- 提出期限は **4月25日(木) 20時まで** です
