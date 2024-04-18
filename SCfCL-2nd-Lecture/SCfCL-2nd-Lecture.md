@@ -364,6 +364,19 @@ Colabの場合「インデント」は自動ではいります
 
 # 条件に応じた処理をする
 
+それでは，実際にP.28の図のプログラムを組んでみましょう
+
+```python
+money = 400
+if (money > 300):
+    print('卵と牛乳を買いましょう')
+else:
+    print('牛乳を買いましょう')
+```
+---
+
+# 条件に応じた処理をする
+
 ![](img/02-006.png)
 
 ---
@@ -383,6 +396,7 @@ elif 条件式3
 else:
     その他処理
 ```
+P.32の図のプログラムをしてみてください
 
 ---
 
@@ -409,7 +423,7 @@ else:
 
 - `[]`の中にオブジェクトを並べます
 - オブジェクトが複数ある場合は「`,`(カンマ)」で区切ります
-- リストの中身のオブジェクトｗｐ「**要素**」と呼びます
+- リストの中身のオブジェクトを「**要素**」と呼びます
 - 要素が何もなくてもOKです
 - リストの中にリストを入れることもできます
 
@@ -432,10 +446,10 @@ else:
 ### インデックスの例
 ```python
 fruits = ['apple', 'orange', 'banana'] # リスト作成
-fruits[0] # 0番目の要素を表示
-fruits[1] # 1番目の要素を表示
+print(fruits[0]) # 0番目の要素を表示
+print(fruits[1]) # 1番目の要素を表示
 fruits[1] = 'grape' # 1番目の要素を「grape」に変更
-fruits # リストの中身を確認
+print(fruits) # リストの中身を確認
 ```
 
 ---
@@ -448,8 +462,8 @@ fruits # リストの中身を確認
 ### append()の例
 ```python
 number = [1, 2, 3] # リスト作成
-number.append(4) # 「number」リストに要素「4」を追加
-number # リストの中身を確認
+print(number.append(4)) # 「number」リストに要素「4」を追加
+print(number) # リストの中身を確認
 ```
 
 ---
@@ -465,11 +479,11 @@ number # リストの中身を確認
 ```python
 alphabet = ['A', 'B', 'C', 'D'] # リスト作成
 char_C = alphabet.pop(2) # アルファベット「C」のインデックスを指定して取り出す
-char_C # 中身を確認
+print(char_C) # 中身を確認
 alphabet # リストの中身を確認
 char_last = alphabet.pop() # インデックスを指定しない場合最後のオブジェクトを取り出す
-char_last # 中身を確認
-alphabet # リストの中身を確認
+print(char_last) # 中身を確認
+print(alphabet) # リストの中身を確認
 ```
 
 ---
