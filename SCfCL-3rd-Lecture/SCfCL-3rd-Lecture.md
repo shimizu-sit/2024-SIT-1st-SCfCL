@@ -417,7 +417,7 @@ for i, fruit in enumerate(fruits):
 
 ---
 
-# 課題3-1
+# 課題3
 
 - Moodleにある「SCfCL-3rd-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
