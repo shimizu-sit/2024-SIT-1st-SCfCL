@@ -8,4 +8,9 @@
 フォルダは授業回ごとに作成します．フォルダ内には，スライド資料の元データとしての MarkdownファイルとそのPDF ファイル，授業資料用のPythonやExcelファイル，参考資料を管理します．
 
 ## 参考サイト
-（適宜追加します）
+
+### Python
+この授業ではPythonを使いますが授業で必要な最低限のみ授業内で解説しますがそれ以上のことを知りたい場合は以下のサイトを参考にしてください．
+
+- [「Python ゼロからはじめるプログラミング」の著者による資料](https://mitani.cs.tsukuba.ac.jp/book_support/python/)
+- [東京大学が公開しているPythonプログラミング入門](https://utokyo-ipp.github.io/)
