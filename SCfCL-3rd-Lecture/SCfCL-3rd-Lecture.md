@@ -112,12 +112,20 @@ print(fruits) # リストの中身を確認
 # リスト型にオブジェクトを追加
 
 - リストにオブジェクトを追加することもできます
-- `append()`メソッドを使ってリストに新たにオブジェクトを付けることができます
+- `append()`：リストの最後に1つだけオブジェクトを追加します
+- `extend()`：指定されたオブジェクトのすべての要素をリストの最後に追加します
 
 ### append()の例
 ```python
 number = [1, 2, 3] # リスト作成
 number.append(4) # 「number」リストに要素「4」を追加
+print(number) # リストの中身を確認
+```
+
+### extend()の例
+```python
+number = [1, 2, 3] # リスト作成
+number.extend([4,5]) # 「number」リストにオブジェクト「[4,5]」の要素を追加
 print(number) # リストの中身を確認
 ```
 
@@ -421,5 +429,5 @@ for i, fruit in enumerate(fruits):
 
 - Moodleにある「SCfCL-3rd-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
-- ダウンロードした.ipynbファイルをMoodleに提出してください
+- ダウンロードした **.ipynbファイル** をMoodleに提出してください
 - 提出期限は **5月2日(木) 20時まで** です
