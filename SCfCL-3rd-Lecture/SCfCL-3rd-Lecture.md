@@ -86,7 +86,7 @@ https://colab.research.google.com/drive/1AYgHFeBe9iASYEqlm9PalPsDDeK1zpzK?usp=sh
 
 ### インデックスの例
 ```python
-numbers = [1, 2, 3, 4, 5] # リスト作成
+number = [1, 2, 3, 4, 5] # リスト作成
 ```
 インデックスの位置
 
@@ -312,14 +312,14 @@ for fruit in fruits:
 
 # 要素の数だけ処理を繰り返す（range()関数）
 
-- 「 **range(開始する値, 終了する値)** 」と指定すると，開始する値から終了する値を変えない範囲で1ずつカウントアップされます
+- 「 **range(開始する値, 終了する値)** 」と指定すると，開始する値から終了する値を超えない範囲で1ずつカウントアップされます
   - 例： ``range(0, 3)`` を実行してみましょう
 - ここで「開始する値」が「0」の場合は省略することができます
   - 例： ``range(0, 3)`` = ``range(3)`` 同じ結果になることを確認してみましょう
 
 ```python
-list(range(0, 3))
-list(range(3))
+print(list(range(0, 3)))
+print(list(range(3)))
 ```
 
 - ``range()`` 関数とforループを使ってみましょう
