@@ -38,7 +38,7 @@ paginate: true
 
 ## 解答例
 
-https://drive.google.com/file/d/1gSb19m8exqu6wAeoFPbeYN-YxydPTduO/view?usp=sharing
+https://colab.research.google.com/drive/1N5mN8JCrI6VmaIpDBXVx392WOn1gUUDn?usp=sharing
 
 ---
 
@@ -53,7 +53,7 @@ https://drive.google.com/file/d/1gSb19m8exqu6wAeoFPbeYN-YxydPTduO/view?usp=shari
 - `if` 文や `while` 文と同じようにインデントが必要です
 - 処理が複数行にわたる場合は2行目移行もインデントが必要になります
 
-（図を追加する）
+![](img/04-001.png)
 
 ---
 
@@ -108,7 +108,7 @@ print(j)
 
 # 関数にわたす情報・関数から戻って来る情報（戻り値）
 
-- **戻り値** ：関数が何を出力するかをい定義するものです
+- **戻り値** ：関数が何を出力するかを定義するものです
 - `return` の後に書きます
 - `return` を定義しない関数は，戻り値がないということになり「**None**」を返します
 - Noneは，値が存在しないことを意味します
@@ -168,7 +168,7 @@ NameError: name 'local_number' is not defined
 # あらかじめ用意されている関数
 
 - `print()` や `str()` などの関数はあらかじめ用意されている関数です
-- これらを組み込み関すと呼びます
+- これらを **組み込み関数** と呼びます
 
 |  関数名   |                                  概要                                  |
 | --------- | ---------------------------------------------------------------------- |
@@ -348,7 +348,7 @@ except ValueError as e:
 
 # `try, except` 文
 
-![](img/04-001.png)
+![](img/04-002.png)
 
 - 「except 例外型 as 変数名:」変数に例外オブジェクトを格納することができます
 - 「except 例外型:」でも可能です
