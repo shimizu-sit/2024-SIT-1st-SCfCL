@@ -265,7 +265,7 @@ many_times(3)
 
 ```python
 import sys
-ROOTPATH = '/content/drive/MyDrive//(開いているノートがあるフォルダ)'
+ROOTPATH = '/content/drive/MyDrive/(開いているノートがあるフォルダ)'
 sys.path.append(ROOTPATH)
 import hello as hi
 
