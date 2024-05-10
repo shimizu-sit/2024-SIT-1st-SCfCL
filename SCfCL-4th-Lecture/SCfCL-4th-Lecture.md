@@ -51,7 +51,7 @@ https://colab.research.google.com/drive/1N5mN8JCrI6VmaIpDBXVx392WOn1gUUDn?usp=sh
 - Pythonの関数は「**`def`**」を使って定義することができる
 - `def` は，definition(「定義」という意味の英単語)の省略形です
 - `if` 文や `while` 文と同じようにインデントが必要です
-- 処理が複数行にわたる場合は2行目移行もインデントが必要になります
+- 処理が複数行にわたる場合は2行目以降もインデントが必要になります
 
 ![](img/04-001.png)
 
@@ -117,7 +117,7 @@ print(j)
 
 # 変数が使える範囲
 
-- **変数** を関数のブロックないで定義するか，関数のブロック外で定義するかによって，**変数が使える範囲（スコープ）が異なります**
+- **変数** を関数のブロック内で定義するか，関数のブロック外で定義するかによって，**変数が使える範囲（スコープ）が異なります**
 - **グローバル変数** ：関数のブロック外で定義される変数，プログラム内のどこからでも呼び出すことができます
 - **ローカル変数** ：関数のブロック内で定義される変数，その関数内でのみ呼び出すことができます
 
@@ -161,7 +161,7 @@ print(local_number)
 ```python
 NameError: name 'local_number' is not defined
 ```
-ローカル変数が範囲外で参照したのでエラー（定義されていない）が発生します
+ローカル変数を範囲外で参照したのでエラー（定義されていない）が発生します
 
 ---
 
@@ -228,7 +228,7 @@ def many_times(count):
 
 ```python
 import sys
-ROOTPATH = 'drive/My Drive/(開いているノートがあるフォルダ)'
+ROOTPATH = '/content/drive/MyDrive/(開いているノートがあるフォルダ)'
 sys.path.append(ROOTPATH)
 import hello
 
@@ -248,7 +248,7 @@ hello.many_times(3)
 
 ```python
 import sys
-ROOTPATH = 'drive/My Drive/(開いているノートがあるフォルダ)'
+ROOTPATH = '/content/drive/MyDrive/(開いているノートがあるフォルダ)'
 sys.path.append(ROOTPATH)
 from hello import many_times
 
@@ -265,7 +265,7 @@ many_times(3)
 
 ```python
 import sys
-ROOTPATH = 'drive/My Drive/(開いているノートがあるフォルダ)'
+ROOTPATH = '/content/drive/MyDrive//(開いているノートがあるフォルダ)'
 sys.path.append(ROOTPATH)
 import hello as hi
 
