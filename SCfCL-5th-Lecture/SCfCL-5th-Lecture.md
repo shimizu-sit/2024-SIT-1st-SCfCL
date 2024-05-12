@@ -178,6 +178,153 @@ import openpyxl as op
   - Colabからアップロードする方法
   - Driveからアップロードする方法
 
+---
+
+# Excelファイルの中身を確認
+
+![w:800](img/05-008.png)
+
+---
+
+# ExcelとOpenPyXLのオブジェクト
+
+- **Excelファイル** = **Workbook**オブジェクト
+
+![w:800](img/05-008.png)
+
+
+---
+
+# ExcelとOpenPyXLのオブジェクト
+
+- **シート** = **Worksheet**オブジェクト
+
+![w:800](img/05-009.png)
+
+---
+
+# ExcelとOpenPyXLのオブジェクト
+
+- **セル** = **Cell**オブジェクト
+
+![w:800](img/05-010.png)
+
+---
+
+# 指定したセルの値を取得する
+
+- shopping.xlsx内のB1セルの値を取得して表示するプログラムを作成します
+- 手順は以下の通りです
+  1. `load_workbook()`メソッドでExcelファイルを読み込みます
+  2. ワークシートとセルを読み込みます
+  3. 読み込んだ値を表示します
+
+---
+
+# 指定してセルの値を取得する
+
+- `load_workbook()`メソッドでExcelファイルを読み込みます
+  - セルを取得するためにExcelファイルを取得する必要があります
+  - `load_workbook()`メソッドの引数にファイル名を指定します
+  - ファイル名だけではなくファイルまでのパスも必要です
+  - Colabの場合：対象ファイルを右クリックして「Copy path」でOK
+
+---
+
+# 指定したセルの値を取得する
+
+- ワークシートとセルを読み込みます
+  - ワークブックを読み込んだのでワークシートとセルを指定します
+  - 対象のシートは「**Sheet1**」，セルは「**B1**」です
+  - さらに値を取得するので`value`プロパティを指定します
+
+---
+
+# 指定したセルの値を取得する
+
+1. `load_workbook()`メソッドでExcelファイルを読み込みます
+2. ワークシートとセルを読み込みます
+3. 読み込んだ値を表示します
+
+```python
+wb = op.load_workbook('/content/drive/MyDrive/???/shopping.xlsx')
+value = wb['Sheet1']['B1'].value
+print(value)
+```
+「**???**」は各自作成したフォルダ名を入れてください
+
+---
+
+# 複数のセルをまとめて取得する
+
+- shopping.xlsxの**B列**をすべて取得してみます
+- データが入っているセルがすでにわかっている場合
+  - 対象：セルB1〜B5
+  - 繰り返し処理を利用します
+  - セルの行と列を個別に指定します
+
+---
+
+# 複数のセルをまとめて取得する
+
+- セルの行と列を個別に指定する方法
+  - `row`(行)と`colum`(列)を使って個別に指定します
+
+```python
+Workbookオブジェクト.Cell(row=行数番号, colum=列数番号)
+```
+
+![w:900](img/05-011.png)
+
+---
+
+# 複数のセルをまとめて取得する
+
+- shopping.xlsxの**B列**をすべて取得してみます
+- データが入っているセルがすでにわかっている場合
+  - 対象：セルB1〜B5
+  - 繰り返し処理を利用します
+  - セルの行と列を個別に指定します
+
+```python
+wb = op.load_workbook('/content/drive/MyDrive/???/shopping.xlsx')
+sheet = wb[‘Sheet1’]
+
+for i in range(1,6):
+  print(sheet.cell(row=i, column=2).value)
+```
+
+---
+
+# list()関数を使ってセルをまとめて取得する
+
+
+- `range()`関数
+  - 最終行を事前に調べる必要があります
+  - 最終行を指定してCellオブジェクトを取得します
+- `list()`関数
+- 指定した列番号や行番号に存在するExcelの`Cell`オブジェクトをまとめて取得します
+
+---
+
+# list()関数を使ってセルをまとめて取得する
+
+- `list()`関数の使い方
+
+```python
+list(Worksheetオブジェクト.columns)[列番号]
+```
+**注意**：listを使う場合列番号はPython上の数え方になりますので**B列**の場合は「**1**」を指定します
+
+- `list()`関数を使ってB列のCellオブジェクトをまとめて取得します
+
+```py
+wb = op.load_workbook('/content/drive/MyDrive/???/shopping.xlsx')
+sheet = wb[‘Sheet1’]
+
+for cell in list(sheet.columns)[1]:
+  print(cell.value)
+```
 
 ---
 
@@ -187,7 +334,7 @@ import openpyxl as op
 
 # 課題
 
-- Moodleにある「SCfCL-4th-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
+- Moodleにある「SCfCL-5th-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** をMoodleに提出してください
-- 提出期限は **5月16日(木) 20時まで** です
+- 提出期限は **5月23日(木) 20時まで** です
