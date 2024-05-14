@@ -273,8 +273,7 @@ print(value)
 ```python
 Workbookオブジェクト.Cell(row=行数番号, colum=列数番号)
 ```
-
-![w:900](img/05-011.png)
+![](img/05-011.png)
 
 ---
 
