@@ -269,11 +269,12 @@ print(value)
 
 - セルの行と列を個別に指定する方法
   - `row`(行)と`colum`(列)を使って個別に指定します
+  - `row=`と`colum=` は省略可能です
 
 ```python
 Workbookオブジェクト.Cell(row=行数番号, colum=列数番号)
 ```
-![](img/05-011.png)
+![w:950](img/05-011.png)
 
 ---
 
@@ -284,6 +285,7 @@ Workbookオブジェクト.Cell(row=行数番号, colum=列数番号)
   - 対象：セルB1〜B5
   - 繰り返し処理を利用します
   - セルの行と列を個別に指定します
+- 1行目の `wb` はすでに宣言しているので書かなくても大丈夫です
 
 ```python
 wb = op.load_workbook('/content/drive/MyDrive/???/shopping.xlsx')
@@ -302,7 +304,7 @@ for i in range(1,6):
   - 最終行を事前に調べる必要があります
   - 最終行を指定してCellオブジェクトを取得します
 - `list()`関数
-- 指定した列番号や行番号に存在するExcelの`Cell`オブジェクトをまとめて取得します
+  - 指定した列番号や行番号に存在するExcelの`Cell`オブジェクトをまとめて取得します
 
 ---
 
