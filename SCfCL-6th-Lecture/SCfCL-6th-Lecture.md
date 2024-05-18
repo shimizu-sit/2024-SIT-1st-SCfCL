@@ -79,6 +79,66 @@ wb.save('/content/drive/MyDrive/???/filename.xlsx')
 
 ---
 
+# 新規作成したExcelファイルの確認
+
+（画像を入れる）
+
+---
+
+# Excelシートを追加/削除します
+
+- 新しいシートを追加します
+
+```py
+Workbookオブジェクト.create_sheet()
+```
+
+- 挿入位置とシート名を指定してシートを追加します
+
+```py
+Workbookオブジェクト.create_sheet(index = 数字, title = 'シート名')
+```
+
+- Excelシートを削除します
+
+```py
+Workbookオブジェクト.remove(Worksheetオブジェクト)
+```
+
+---
+
+# Excelシートを追加/削除します
+
+- 新しいシートを追加します
+
+```py
+wb = op.Workbook()
+
+wb.create_sheet()
+print(wb.sheetnames)
+wb.save('/content/drive/MyDrive/???/create_sheet.xlsx')
+```
+
+(画像を追加)
+
+---
+
+# Excelシートを追加/削除します
+
+- 挿入位置とシート名を指定して新しいシートを追加します
+
+```py
+wb = op.Workbook()
+
+wb.create_sheet(index = 1, title = 'NewSheet')
+print(wb.sheetnames)
+wb.save('/content/drive/MyDrive/???/create_sheet.xlsx')
+```
+
+(画像を追加)
+
+---
+
 # 課題
 
 ---
