@@ -335,7 +335,7 @@ for cell in list(sheet.columns)[1]:
 
 # 課題
 
-- Moodleにある「SCfCL-5th-prac.ipynb」ファイルと「menberlist.xlsx」ファイルをダウンロードしてColabにアップロードしてください
+- Moodleにある「SCfCL-5th-prac.ipynb」ファイルと「memberlist.xlsx」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** をMoodleに提出してください
 - 提出期限は **5月23日(木) 20時まで** です
