@@ -81,7 +81,7 @@ wb.save('/content/drive/MyDrive/???/filename.xlsx')
 
 # 新規作成したExcelファイルの確認
 
-（画像を入れる）
+![w:900](img/06-001.png)
 
 ---
 
@@ -119,7 +119,7 @@ print(wb.sheetnames)
 wb.save('/content/drive/MyDrive/???/create_sheet.xlsx')
 ```
 
-(画像を追加)
+![](img/06-002.png)
 
 ---
 
@@ -130,12 +130,12 @@ wb.save('/content/drive/MyDrive/???/create_sheet.xlsx')
 ```py
 wb = op.Workbook()
 
-wb.create_sheet(index = 1, title = 'NewSheet')
+wb.create_sheet(index = 0, title = 'NewSheet')
 print(wb.sheetnames)
 wb.save('/content/drive/MyDrive/???/create_sheet.xlsx')
 ```
 
-(画像を追加)
+![](img/06-003.png)
 
 ---
 
