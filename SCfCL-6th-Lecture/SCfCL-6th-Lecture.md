@@ -248,6 +248,134 @@ wb.save('/content/drive/MyDrive/???/font.xlsx')
 
 ---
 
+# Excelのレイアウトを編集
+
+---
+
+# Excelの行高と列幅を設定する
+
+- Excelの行高と列幅を設定する方法
+  - **行高**：行番号を指定して高さの数値（**ポイント**）を入力します
+  ```py
+  Worksheetオブジェクト.row_dimensions[行番号].height = 高さの数値
+  ```
+  - **列幅**：列番号を指定して幅の数値（**文字数**）を入力します
+  ```py
+  Worksheetオブジェクト.column_dimensions[列番号].width = 幅の数値
+  ```
+行高と列幅で単位が異なるので注意が必要です
+
+---
+
+# Excelの行高と列幅を設定する
+
+- Excelの行高と列幅を設定する例です
+  - **行高の設定**：2行目を「50」に設定します
+  - **列幅の設定**：C列目を「50」に設定します
+
+```py
+wb = op.Workbook()
+sheet = wb.active
+
+sheet.row_dimensions[2].height = 50
+sheet.column_dimensions['C'].width = 50
+wb.save('/content/drive/MyDrive/???/row_column.xlsx')
+```
+
+---
+
+# Excelの行高と列幅を設定する（結果）
+
+![](img/06-006.png)
+
+---
+
+# Excelの行や列を非表示にする
+
+- 行や列を非表示にする`hidden`属性
+  - 行や列を指定して非表示設定にします
+  ```py
+  Worksheetオブジェクト.row_dimensions[行番号].hidden = True
+  Worksheetオブジェクト.column_dimensions[列番号].hidden = True
+  ```
+  - 非表示の行や列を表示します
+  ```py
+  Worksheetオブジェクト.row_dimensions[行番号].hidden = False
+  Worksheetオブジェクト.column_dimensions[列番号].hidden = False
+  ```
+
+---
+
+
+# Excelの行や列を非表示にする
+
+- 2行目とB,D列を非表示設定にする例です
+
+```py
+wb = op.Workbook()
+sheet = wb.active
+
+#セルA1〜E5に1〜25の数字を入れる
+for i in range(1,6):
+  for j in range(1,6):
+    sheet.cell(j,i).value = i * j
+
+sheet.row_dimensions[3].hidden = True			# 3行目を非表示
+sheet.column_dimensions['B'].hidden =True		# B行を非表示
+sheet.column_dimensions['D'].hidden =True		# D行を非表示
+wb.save('/content/drive/MyDrive/???/row_column_hidden.xlsx')
+```
+
+---
+
+# Excelの行や列を非表示にする
+
+- 2行目とB,D列を非表示設定にする例です
+
+![](img/06-007.png)
+
+---
+
+# Excelの行と列を固定表示にする
+
+- Excelの行と列を固定表示します
+  - 固定する行や列の下もしくは右，右下のセルを指定します
+  - 例：1行目のみ固定する場合：指定するセルは「`A2`」
+  - 例：B列のみ固定する場合：指定するセルは「`C1`」
+  - 例：2行目とC列まで固定する場合：指定するセルは「`D3`」
+
+```py
+Worksheetオブジェクト.freeze_panes = セル
+```
+
+---
+
+# Excelの行と列を固定表示にする
+
+- ２行目までを固定にします
+
+```py
+wb = op.Workbook()
+sheet = wb.active
+
+#セルA1〜E5に1〜25の数字を入れる
+for i in range(1,6):
+  for j in range(1,6):
+    sheet.cell(j,i).value = i * j
+
+sheet.freeze_panes = 'A3'	# 2行目までを固定:セルA3を指定
+
+wb.save('/content/drive/MyDrive/???/freeze-panes.xlsx')
+```
+
+---
+
+# Excelの行と列を固定表示にする(結果)
+
+![](img/06-008.png)
+
+---
+
 # 課題
 
 ---
