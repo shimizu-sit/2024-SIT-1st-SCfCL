@@ -384,5 +384,5 @@ wb.save('/content/drive/MyDrive/???/freeze-panes.xlsx')
 
 - Moodleにある「SCfCL-6th-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
-- ダウンロードした **.ipynbファイル** をMoodleに提出してください
+- ダウンロードした **.ipynbファイル** と作成した **Excelファイル3つ** をMoodleに提出してください
 - 提出期限は **5月30日(木) 20時まで** です
