@@ -3,6 +3,7 @@ marp: true
 math: katex
 paginate: true
 ---
+<!-- スライドURL：https://docs.google.com/presentation/d/1Hd3drkThhEUcVxniYPPcNgURlhmZKMsJPqyBQUiNiog/edit?usp=sharing --->
 
 # コンピュータリテラシ発展 〜Pythonを学ぶ〜
 
