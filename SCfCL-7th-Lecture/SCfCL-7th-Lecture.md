@@ -72,6 +72,133 @@ Reference(Workbookオブジェクト,
 
 ---
 
+# グラフが読み込むデータを決める
+
+（画像を挿入する）
+
+---
+
+# グラフの種類を消める
+
+- 代表的なグラフの種類
+  - [BarChart（棒グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/bar.html)
+  - [PieChart（円グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/pie.html)
+  - [LineChart（折れ線グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/line.html)
+  - [ScatterChart（散布図）](https://openpyxl.readthedocs.io/en/latest/charts/scatter.html)
+  - [それ以外](https://openpyxl.readthedocs.io/en/latest/charts/introduction.html)
+
+---
+
+# グラフの種類を決める
+
+- グラフの種類を決めたら`Chart`オブジェクトを作成します
+- 例：**BarChart（棒グラフ）** を作成します
+  ```py
+  chart = BarChart()
+  ```
+- グラフタイトル，グラフの横幅，高さをしていします
+  ```py
+  chart.title = 'タイトル名'
+  chart.width = 横幅の値
+  chart.height = 高さの値
+  ```
+
+- グラフの種類によって異なる属性をもちます
+- 棒グラフの場合，横軸と縦軸のタイトル属性があります
+  ```py
+  barchart.x_axis.title = '横軸タイトル'
+  barchart.y_axis.title = '縦軸タイトル'
+  ```
+---
+
+# グラフにデータをわたす
+
+- Chartオブジェクトがもつ `add_data()` メソッドを使います
+- Chartオブジェクトにグラフ作成に必要なデータをわたすことができます
+
+```py
+Chartオブジェクト.add_data(Referenceオブジェクト)
+```
+
+---
+
+# グラフをつくる
+
+- 元のデータの指定，グラフ種類の決定，データをわたすところまでできたのでグラフを作成します
+- Worksheetオブジェクトの`add_chart()`メソッドでシートにグラフを追加できます
+
+```py
+Worksheetオブジェクト.add_chart(Chartオブジェクト, 'グラフを追加するセル位置')
+```
+
+---
+
+# グラフを作る
+
+```py
+import openpyxl as op
+from openpyxl.chart import BarChart, Reference
+
+wb = op.load_workbook(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+ws = wb[‘Sheet’]
+
+ref_obj = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=10)
+
+chart = BarChart()
+chart.title = 'sample chart'
+chart.add_data(ref_obj)
+
+ws.add_chart(chart, 'C1')
+wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+```
+
+---
+
+# グラフを作る（結果）
+
+（生成したグラフのスクショを貼り付ける）
+
+---
+
+# データから系列をつくる
+
+- **系列**：同じ系列のデータをまとめたもののことです
+- 先ほど作成したグラフで「**系列1**」と書いてある部分です
+- 系列を設定するとそのデータが具体的に何なのかがわかります
+- 系列は`Series`オブジェクトとして表します
+- `Series`オブジェクトは`Reference`オブジェクトをわたして生成します
+- `Series`オブジェクトは`Chart`オブジェクトの`append()`メソッドにわたします
+
+---
+
+# データから系列を作る
+
+```py
+import openpyxl as op
+from openpyxl.chart import BarChart, Reference, Series
+
+wb = op.load_workbook(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+ws = wb[‘Sheet’]
+
+ref_obj = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=10)
+series_obj = Series(ref_obj, title = ‘sample series’)
+
+chart = BarChart()
+chart.title = 'sample chart'
+chart.append(series_obj)
+
+ws.add_chart(chart, 'C1')
+wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+```
+
+---
+
+# データから系列を作る（結果）
+
+（画像を貼り付ける）
+
+---
+
 # 課題
 
 ---
