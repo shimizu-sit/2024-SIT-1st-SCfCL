@@ -56,9 +56,9 @@ wb = op.Workbook()
 wb.save('filename.xlsx')
 ```
 
-- `workbook`の引数を空にすると新しいワークブックを読み込みます
+- `Workbook`の引数を空にすると新しいワークブックを読み込みます
 - `save()`メソッドで保存します
-- 保存作為を指定したい場合はパスを含めて指定する必要があります
+- 保存場所を指定したい場合はパスを含めて指定する必要があります
 
 ---
 
@@ -73,9 +73,9 @@ wb = op.Workbook()
 wb.save('/content/drive/MyDrive/???/filename.xlsx')
 ```
 
-- `workbook`の引数を空にすると新しいワークブックを読み込みます
+- `Workbook`の引数を空にすると新しいワークブックを読み込みます
 - `save()`メソッドで保存します
-- 保存作為を指定したい場合はパスを含めて指定する必要があります
+- 保存場所を指定したい場合はパスを含めて指定する必要があります
 
 ---
 
@@ -160,6 +160,23 @@ print(wb.sheetnames)
   - 文字列を入力します　：　`Worksheetオブジェクト[セル] = '文字列'`
   - 数値を入力します　：　`Worksheetオブジェクト[セル] = 数値`
   - 数式を入力します　：　`Worksheetオブジェクト[セル] = '=数式'`
+
+---
+
+# セルの値を編集する
+
+```py
+wb = op.Workbook()
+sheet = wb.active
+
+sheet['B2'] = '文字列'       # 文字列
+sheet['B3'] = '10'          # 文字列としての数字
+sheet['B4'] = 10            # 数字
+sheet['B5'] = 20            # 数字
+sheet['B6'] = '=sum(B4:B5)' # Excelの関数
+
+wb.save('/content/drive/MyDrive/???/cell.xlsx')
+```
 
 ---
 
@@ -309,7 +326,7 @@ wb.save('/content/drive/MyDrive/???/row_column.xlsx')
 
 # Excelの行や列を非表示にする
 
-- 2行目とB,D列を非表示設定にする例です
+- 3行目とB,D列を非表示設定にする例です
 
 ```py
 wb = op.Workbook()
@@ -330,7 +347,7 @@ wb.save('/content/drive/MyDrive/???/row_column_hidden.xlsx')
 
 # Excelの行や列を非表示にする
 
-- 2行目とB,D列を非表示設定にする例です
+- 3行目とB,D列を非表示設定にする例です
 
 ![](img/06-007.png)
 
@@ -341,7 +358,7 @@ wb.save('/content/drive/MyDrive/???/row_column_hidden.xlsx')
 - Excelの行と列を固定表示します
   - 固定する行や列の下もしくは右，右下のセルを指定します
   - 例：1行目のみ固定する場合：指定するセルは「`A2`」
-  - 例：B列のみ固定する場合：指定するセルは「`C1`」
+  - 例：B列まで固定する場合：指定するセルは「`C1`」
   - 例：2行目とC列まで固定する場合：指定するセルは「`D3`」
 
 ```py
