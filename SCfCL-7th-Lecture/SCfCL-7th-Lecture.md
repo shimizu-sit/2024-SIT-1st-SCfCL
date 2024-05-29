@@ -87,7 +87,7 @@ Reference(Worksheetオブジェクト,
 
 ---
 
-# グラフの種類を消める
+# グラフの種類を決める
 
 - 代表的なグラフの種類
   - [BarChart（棒グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/bar.html)
@@ -105,7 +105,7 @@ Reference(Worksheetオブジェクト,
   ```py
   chart = BarChart()
   ```
-- グラフタイトル，グラフの横幅，高さをしていします
+- グラフタイトル，グラフの横幅，高さを指定します
   ```py
   chart.title = 'タイトル名'
   chart.width = 横幅の値
@@ -144,7 +144,7 @@ Worksheetオブジェクト.add_chart(Chartオブジェクト, 'グラフを追�
 
 # グラフを作る
 
-- これまでに内容をまとめてグラフを作成します
+- これまでの内容をまとめてグラフを作成します
 - 元データは`B5`から`B14`です
 - このデータをもとに棒グラフを作成します
 
@@ -186,7 +186,7 @@ wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 - 系列を設定するとそのデータが具体的に何なのかがわかります
 - 系列は`Series`オブジェクトとして表します
 - `Series`オブジェクトは`Reference`オブジェクトをわたして生成します
-- `Series`オブジェクトは`Chart`オブジェクトの`append()`メソッドにわたします
+- `Series`オブジェクトのタイトルは`Chart`オブジェクトの`append()`メソッドにわたします
 
 ---
 
@@ -199,8 +199,8 @@ from openpyxl.chart import BarChart, Reference, Series
 wb = op.load_workbook(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 ws = wb[‘Sheet’]
 
-ref_obj = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=10)
-series_obj = Series(ref_obj, title = ‘sample series’)
+ref_obj = Reference(ws, min_col=2, min_row=5, max_col=2, max_row=14)
+series_obj = Series(ref_obj, title = ‘Sample Series’)
 
 chart = BarChart()
 chart.title = 'sample chart'
@@ -227,4 +227,4 @@ wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 - Moodleにある「SCfCL-7th-prac.ipynb」ファイルと「workinghours.xlsx」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** と作成した **Excelファイル3つ** をMoodleに提出してください
-- 提出期限は **5月30日(木) 20時まで** です
+- 提出期限は **6月6日(木) 20時まで** です
