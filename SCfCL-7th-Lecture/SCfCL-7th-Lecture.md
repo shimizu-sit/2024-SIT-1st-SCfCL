@@ -144,20 +144,30 @@ Worksheetオブジェクト.add_chart(Chartオブジェクト, 'グラフを追�
 
 # グラフを作る
 
+- これまでに内容をまとめてグラフを作成します
+- 元データは`B5`から`B14`です
+- このデータをもとに棒グラフを作成します
+
+![w:700](img/07-002.png)
+
+---
+
+# グラフを作る
+
 ```py
 import openpyxl as op
 from openpyxl.chart import BarChart, Reference
 
 wb = op.load_workbook(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
-ws = wb[‘Sheet’]
+ws = wb['Sheet']
 
-ref_obj = Reference(ws, min_col=1, min_row=1, max_col=1, max_row=10)
+data = Reference(ws, min_col=2, min_row=5, max_col=2, max_row=14)
 
 chart = BarChart()
-chart.title = 'sample chart'
-chart.add_data(ref_obj)
+chart.title = 'Sample Chart'
+chart.add_data(data)
 
-ws.add_chart(chart, 'C1')
+ws.add_chart(chart, 'D5')
 wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 ```
 
@@ -165,7 +175,7 @@ wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 
 # グラフを作る（結果）
 
-（生成したグラフのスクショを貼り付ける）
+![](img/07-003.png)
 
 ---
 
@@ -204,7 +214,7 @@ wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 
 # データから系列を作る（結果）
 
-（画像を貼り付ける）
+![](img/07-004.png)
 
 ---
 
@@ -214,7 +224,7 @@ wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
 
 # 課題
 
-- Moodleにある「SCfCL-6th-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
+- Moodleにある「SCfCL-7th-prac.ipynb」ファイルと「workinghours.xlsx」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** と作成した **Excelファイル3つ** をMoodleに提出してください
 - 提出期限は **5月30日(木) 20時まで** です
