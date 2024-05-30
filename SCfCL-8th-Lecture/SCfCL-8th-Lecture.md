@@ -3,11 +3,11 @@ marp: true
 math: katex
 paginate: true
 ---
-<!-- スライドURL：https://docs.google.com/presentation/d/1Hd3drkThhEUcVxniYPPcNgURlhmZKMsJPqyBQUiNiog/edit?usp=sharing --->
+<!-- スライドURL：https://docs.google.com/presentation/d/1en3iGS3B-GlsSBFECzfODm5qjF3iIN72v04S5zuJzcw/edit?usp=sharing --->
 
 # コンピュータリテラシ発展 〜Pythonを学ぶ〜
 
-## 第7回：Excel作業を自動化しよう(3)
+## 第8回：Excel作業の前工程・後工程の自動化」
 
 情報学部 情報学科 情報メディア専攻
 清水 哲也 ( shimizu@info.shonan-it.ac.jp )
@@ -21,7 +21,7 @@ paginate: true
 # 今回の授業内容
 
 - 前回の課題解説
-- Excelのグラフを作成する
+- フォルダ・ファイル操作
 - 課題
 
 ---
@@ -37,184 +37,271 @@ paginate: true
 
 ## 解答例
 
-https://colab.research.google.com/drive/1W6opl8qaSnRefT5zX9pGUZoX2DPnAJTh?usp=sharing
+（あとでURLを貼り付ける）
 
 ---
 
-# Excelのグラフを作成する
+# フォルダ・ファイル操作
 
 ---
 
-# Excelのグラフを作成する
+# 絶対パスと相対パス
 
-- ここで学ぶことを以下にまとめます
-  - グラフが読み込むデータを決める
-  - グラフの種類を決める
-  - グラフにデータをわたす
-  - グラフをつくる
-  - データから系列をつくる
+プログラムで外部ファイルを操作する際には，**場所に関する情報**を指定する必要があります
+
+指定方法は2つあります
+- **絶対パス**：絶対的な位置の記述（例：住所）
+- **相対パス**：今自分がいる場所を起点にした位置の記述（例：道案内）
 
 ---
 
-# グラフが読み込むデータを決める
+# 絶対パスと相対パス（絶対パスについて）
 
-- グラフを作成するために元となるデータが必要です
-- 元データのセルを範囲選択するための関数
-  - `Reference()`関数
+- OS(コンピュータ)で自分がいる場所に関する情報はツリー構造
+- ツリー構造の基準
+  - WindowsならCドライブ
+  - LinuxやMacならルート（root）
+- 基準から目的のファイルやフォルダまでのパスを記述するのが**絶対パス**
+
+---
+
+# 絶対パスと相対パス（絶対パスについて）
+
+（絶対パスを解説する図を挿入）
+
+---
+
+# 絶対パスと相対パス（相対パスについて）
+
+- 自分が現在操作しているフォルダをピリオド1つ「**.**」で表します
+- 1つ上の階層のフォルダならピリオド２つ「**..**」で表します
+
+---
+
+# 絶対パスと相対パス（相対パスについて）
+
+（絶対パスを解説する図を挿入）
+
+---
+
+# フォルダにあるファイルを一覧表示する
+
+- 現在のフォルダの場所を確認します
+- `os` モジュールをインポート
+  - フォルダやファイルの操作などOSに依存しているさまざまな機能が備わっているモジュールです
+- `getcwd()`関数
+  - 現在自分がいるフォルダ（カレントディレクトリ）を絶対パスで表示
+  - **get** **c**urrent **w**orking **d**irectoryの略
+
+---
+
+# フォルダにあるファイルを一覧表示する
+
+- 現在のフォルダの場所を確認します
+- Colabで実行するので「**￥**」ではなく「**/**」で表示されます
 
 ```py
-Reference(Workbookオブジェクト,
-          min_col = データ取得を始めるcolumn位置,
-          min_row = データ取得を始めるrow位置,
-          max_col = データ取得を終えるcolumn位置,
-          max_row = データ取得を終えるrow位置)
+import os
+
+path = os.getcwd()
+print(path)
 ```
 
 ---
 
-# データ読み込み例
+# フォルダにあるファイルを一覧表示する
 
-![bg left:40% w:500](img/07-001.png) 
-```py
-Reference(Worksheetオブジェクト,
-          min_col = 3, # 元データの開始列（左上）番号
-          min_row = 3, # 元データの開始行（左上）番号
-          max_col = 4, # 元データの終了列（右下）番号
-          max_row = 12 # 元データの終了行（右下）番号
-          )
-```
-
+- 現在のフォルダにあるファイルの一覧を表示
+- `listdir()`関数
+  - 特定フォルダ内にあるファイルを一覧表示する関数
+  - 引数はファイルを表示したいディレクトリ（フォルダ）のパス
 
 ---
 
-# グラフの種類を決める
+# フォルダにあるファイルを一覧表示する
 
-- 代表的なグラフの種類
-  - [BarChart（棒グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/bar.html)
-  - [PieChart（円グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/pie.html)
-  - [LineChart（折れ線グラフ）](https://openpyxl.readthedocs.io/en/latest/charts/line.html)
-  - [ScatterChart（散布図）](https://openpyxl.readthedocs.io/en/latest/charts/scatter.html)
-  - [それ以外](https://openpyxl.readthedocs.io/en/latest/charts/introduction.html)
-
----
-
-# グラフの種類を決める
-
-- グラフの種類を決めたら`Chart`オブジェクトを作成します
-- 例：**BarChart（棒グラフ）** を作成します
-  ```py
-  chart = BarChart()
-  ```
-- グラフタイトル，グラフの横幅，高さを指定します
-  ```py
-  chart.title = 'タイトル名'
-  chart.width = 横幅の値
-  chart.height = 高さの値
-  ```
-
-- グラフの種類によって異なる属性をもちます
-- 棒グラフの場合，横軸と縦軸のタイトル属性があります
-  ```py
-  barchart.x_axis.title = '横軸タイトル'
-  barchart.y_axis.title = '縦軸タイトル'
-  ```
----
-
-# グラフにデータをわたす
-
-- Chartオブジェクトがもつ `add_data()` メソッドを使います
-- Chartオブジェクトにグラフ作成に必要なデータをわたすことができます
+- 現在のフォルダにあるファイルの一覧を表示します
+- 今自分がいるフォルダのファイルを一覧表示します
 
 ```py
-Chartオブジェクト.add_data(Referenceオブジェクト)
+import os # osモジュールは一度インポートしていれば再度書かかなくてもよい
+
+path = os.getcwd()
+files = os.listdir(path)
+
+print(files)
 ```
 
 ---
 
-# グラフをつくる
+# フォルダにあるファイルを一覧表示する
 
-- 元のデータの指定，グラフ種類の決定，データをわたすところまでできたのでグラフを作成します
-- Worksheetオブジェクトの`add_chart()`メソッドでシートにグラフを追加できます
+- 現在のフォルダにあるファイルの一覧を表示します
+- Google Driveをマウントしてください
+- 授業用フォルダ内のファイルを一覧表示します
 
 ```py
-Worksheetオブジェクト.add_chart(Chartオブジェクト, 'グラフを追加するセル位置')
+import os
+
+# Google Driveをマウントして授業用フォルダのpathを書いてください
+path = '/content/drive/MyDrive/???'
+files = os.listdir(path)
+
+print(files)
 ```
 
 ---
 
-# グラフを作る
+# フォルダにあるファイルを一覧表示する
 
-- これまでの内容をまとめてグラフを作成します
-- 元データは`B5`から`B14`です
-- このデータをもとに棒グラフを作成します
-
-![w:700](img/07-002.png)
+- 相対パスを使ってファイルを一覧表示させます
+- ColabはLinux系なので「**¥**」ではなく「**/**」を使います
+- 一つ上のフォルダにあるファイルを一覧表示させます
+  - パスには「`../`」を指定します
 
 ---
 
-# グラフを作る
+# フォルダにあるファイルを一覧表示する
+
+- 相対パスを使ってファイルを一覧表示させます
+- 一つ上のフォルダにあるファイルを一覧表示させます
 
 ```py
-import openpyxl as op
-from openpyxl.chart import BarChart, Reference
+import os
 
-wb = op.load_workbook(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
-ws = wb['Sheet']
+path = '../'
+files = os.listdir(path)
 
-data = Reference(ws, min_col=2, min_row=5, max_col=2, max_row=14)
-
-chart = BarChart()
-chart.title = 'Sample Chart'
-chart.add_data(data)
-
-ws.add_chart(chart, 'D5')
-wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+print(files)
 ```
 
 ---
 
-# グラフを作る（結果）
+# フォルダにあるファイルを一覧表示する
 
-![](img/07-003.png)
-
----
-
-# データから系列をつくる
-
-- **系列**：同じ系列のデータをまとめたもののことです
-- 先ほど作成したグラフで「**系列1**」と書いてある部分です
-- 系列を設定するとそのデータが具体的に何なのかがわかります
-- 系列は`Series`オブジェクトとして表します
-- `Series`オブジェクトは`Reference`オブジェクトをわたして生成します
-- `Series`オブジェクトのタイトルは`Chart`オブジェクトの`append()`メソッドにわたします
+- 再帰的にフォルダの中身を表示します
+- 出力結果の中にあるフォルダ（サブフォルダ）の中身を表示します
+- `glob`モジュール
+  - 再帰的なファイル検索を実行
+  - 高度な検索が可能
+- 再帰的とは
+  - 自己の行為の結果が自己に戻ってくること
 
 ---
 
-# データから系列を作る
+# フォルダにあるファイルを一覧表示する
+
+- 再帰的にフォルダの中身を表示します
+- 出力結果の中にあるフォルダ（サブフォルダ）の中身を表示します
+- 表示を見やすくするためにpprintモジュールを利用します
+- **注意**：MyDriveをよく使っている場合ファイル数が多く処理に時間がかかります
 
 ```py
-import openpyxl as op
-from openpyxl.chart import BarChart, Reference, Series
+import glob, pprint
 
-wb = op.load_workbook(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
-ws = wb[‘Sheet’]
+files = glob.glob('/content/drive/MyDrive/**', recursive = True)
 
-ref_obj = Reference(ws, min_col=2, min_row=5, max_col=2, max_row=14)
-series_obj = Series(ref_obj, title = ‘Sample Series’)
-
-chart = BarChart()
-chart.title = 'sample chart'
-chart.append(series_obj)
-
-ws.add_chart(chart, 'C1')
-wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+pprint.pprint(files)
 ```
 
 ---
 
-# データから系列を作る（結果）
+# フォルダを作成する
 
-![](img/07-004.png)
+- プログラムでフォルダを作成します
+  - 特定の命名規則に従ってフォルダ生成
+  - 大量のフォルダを生成
+  - いろんな業務上で役に立つ
+
+---
+
+# フォルダを作成する
+
+- フォルダを作成します
+- `makedirs()`関数
+  - 第1引数：作成するフォルダ名
+  - 第2引数：「`exist_ok=True`」とすることですでに作成されていてもエラーが発生しない
+
+### 実行例
+
+```py
+os.makedirs('file-name', exist_ok = True)
+```
+
+---
+
+# フォルダを作成する
+
+- フォルダを作成します
+- `makedirs()`関数
+
+```py
+import os
+
+os.makedirs('tmp', exist_ok = True)
+
+print(os.listdir('.'))
+```
+
+---
+
+# ファイルの書き込みと読み込み
+
+- `open()`関数
+  - Pythonに標準で用意されている関数
+  - 引数
+    - ファイル名
+    - モードオプション
+    - encodingオプション
+    - newlineオプションなど
+
+---
+
+# ファイルの書き込みと読み込み
+
+- `open()`関数
+  - 引数
+    - ファイル名
+      - 作成するファイルの名前
+      - ファイルの作成する場所をパスで指定
+      - 例：`./file.txt`（カレントディレクトリに「file.txt」を作成）
+
+---
+
+# ファイルの書き込みと読み込み
+
+- `open()`関数 - 引数 - モードオプション（一部）
+
+| モード | 解説 |
+|---|---|
+| `r` | 読み込み用に開く（デフォルトのモード） |
+| `w` | 書き込み用に開き，ファイルが存在する場合は内容を破棄して上書きする |
+| `x` | 生成用に開き，ファイルが存在する場合は失敗する |
+| `a` | 書き込み用に開き，ファイルが存在する場合は末尾に追記する |
+| `b` | バイナリモードで開く（画像などのファイル読み込み時に使用）※1 |
+
+※1：他のモードと組み合わせて，`rb`や`wb`のように使う
+
+---
+
+# ファイルの書き込みと読み込み
+
+- `open()`関数
+  - 引数
+    - encodingオプション
+      - テキストエンコーディングを指定
+      - **UTF-8**, **Shift-JIS**など
+
+---
+
+# ファイルの書き込みと読み込み
+
+- `open()`関数
+  - 引数
+    - newlineオプション
+      - 改行コードの制御
+      - 詳細は後ほど
+
 
 ---
 
