@@ -168,7 +168,7 @@ chart.title = 'Sample Chart'
 chart.add_data(data)
 
 ws.add_chart(chart, 'D5')
-wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+wb.save(‘/content/drive/MyDrive/????/sample_chart-1.xlsx’)
 ```
 
 ---
@@ -203,11 +203,11 @@ ref_obj = Reference(ws, min_col=2, min_row=5, max_col=2, max_row=14)
 series_obj = Series(ref_obj, title = ‘Sample Series’)
 
 chart = BarChart()
-chart.title = 'sample chart'
+chart.title = 'Sample Chart'
 chart.append(series_obj)
 
 ws.add_chart(chart, 'C1')
-wb.save(‘/content/drive/MyDrive/????/sample_chart.xlsx’)
+wb.save(‘/content/drive/MyDrive/????/sample_chart-2.xlsx’)
 ```
 
 ---
