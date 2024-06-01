@@ -206,7 +206,7 @@ chart = BarChart()
 chart.title = 'Sample Chart'
 chart.append(series_obj)
 
-ws.add_chart(chart, 'C1')
+ws.add_chart(chart, 'D5')
 wb.save(‘/content/drive/MyDrive/????/sample_chart-2.xlsx’)
 ```
 
