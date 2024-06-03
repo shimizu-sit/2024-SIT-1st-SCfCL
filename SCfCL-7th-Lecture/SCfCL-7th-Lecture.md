@@ -63,7 +63,7 @@ https://colab.research.google.com/drive/1W6opl8qaSnRefT5zX9pGUZoX2DPnAJTh?usp=sh
   - `Reference()`関数
 
 ```py
-Reference(Workbookオブジェクト,
+Reference(Worksheetオブジェクト,
           min_col = データ取得を始めるcolumn位置,
           min_row = データ取得を始めるrow位置,
           max_col = データ取得を終えるcolumn位置,
