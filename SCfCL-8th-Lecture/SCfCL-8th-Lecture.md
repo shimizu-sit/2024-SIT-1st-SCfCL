@@ -68,7 +68,7 @@ https://colab.research.google.com/drive/19Z-0cazD1msCVyHCf9Bs-rUDOInHB7dG?usp=sh
 
 # 絶対パスと相対パス（絶対パスについて）
 
-（絶対パスを解説する図を挿入）
+![w:700](img/08-001.png)
 
 ---
 
@@ -81,7 +81,7 @@ https://colab.research.google.com/drive/19Z-0cazD1msCVyHCf9Bs-rUDOInHB7dG?usp=sh
 
 # 絶対パスと相対パス（相対パスについて）
 
-（絶対パスを解説する図を挿入）
+![w:700](img/08-002.png)
 
 ---
 
