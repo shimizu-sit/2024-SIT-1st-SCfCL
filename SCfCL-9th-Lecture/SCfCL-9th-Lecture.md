@@ -38,7 +38,8 @@ paginate: true
 
 ## 解答例
 
-（後でURLを貼り付ける）
+https://colab.research.google.com/drive/1il56vahBZGQGQwkpbIwzJ92_Eodw6xGf?usp=sharing
+
 
 ---
 
@@ -225,7 +226,7 @@ import re # reモジュールをインポート
 file_path = '/content/drive/MyDrive/???/text_search/file.txt'
 
 # ファイルをUTF-8エンコーディングで読み込みモードで開く
-with open(file_path', encoding='UTF-8') as f:
+with open(file_path, encoding='UTF-8') as f:
   # ファイルの内容を読み取り、正規表現を使って郵便番号のリストを抽出
   # 正規表現 r'\d\d\d-\d\d\d\d' は 'xxx-xxxx' 形式の郵便番号にマッチする
   postal_code_list = re.findall(r'\d\d\d-\d\d\d\d', f.read())
@@ -337,7 +338,7 @@ with open(file_path, encoding='UTF-8') as f:
 - 正規表現で検索一致した文字列の位置を求める
 - `search()`メソッドとマッチオブジェクト
 
-（画像を作っていれる）
+![](img/09-002.png)
 
 ---
 
