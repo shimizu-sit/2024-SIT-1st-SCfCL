@@ -482,7 +482,7 @@ df = pd.read_csv(path + 'sample.csv', header=None)
 df.loc[0] = ['10', '20', '30']
 # 変更されたデータフレームを新しいCSVファイル 'sample2.csv' に保存
 # index=False は行番号を保存しないことを示す
-# header=False はヘッダー行を保存しないことを示す（誤りを修正）
+# header=None はヘッダー行を保存しないことを示す
 df.to_csv(path +'sample2.csv', index=False, header=None)
 
 ```
