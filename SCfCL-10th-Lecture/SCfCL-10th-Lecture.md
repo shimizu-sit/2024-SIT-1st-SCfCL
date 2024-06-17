@@ -38,7 +38,7 @@ paginate: true
 
 ## 解答例
 
-（第9回課題の解答例を作成してURLを貼り付ける）
+https://colab.research.google.com/drive/1LhxzCzdAQu8Utigrpj2KZTrR1oMnIl69?usp=sharing
 
 
 ---
@@ -328,4 +328,4 @@ print(people.iloc[2:5])
 - Moodleにある「SCfCL-10th-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
 - 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** と作成した「Prac09」フォルダを圧縮してMoodleに提出してください
-- 提出期限は **6月20日(木) 20時まで** です
+- 提出期限は **6月27日(木) 20時まで** です
