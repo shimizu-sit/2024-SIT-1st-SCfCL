@@ -291,13 +291,7 @@ import seaborn as sns
 
 
 ```py
-# '北野'という名前のインデックスラベルに対応する
-# 行をデータフレーム 'people' から取得し、表示
-print(people.loc['北野'])
 
-# インデックス位置が1（2番目の行）に対応する
-# 行をデータフレーム 'people' から取得し、表示
-print(people.iloc[1])
 ```
 
 ---
