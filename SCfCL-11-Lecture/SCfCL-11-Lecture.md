@@ -282,16 +282,19 @@ import seaborn as sns
 
 ---
 
-# pandasの基本的な使い方
+# データを可視化するためのライブラリ
 
-- `loc`と`iloc`属性によるデータの選択
-  - インデックスラベルが「`北野`」のデータを取り出す方法（loc属性利用）
-  - 行インデックスが「`1`」のデータを取り出す方法(iloc属性利用）
-  - 同じ結果になります
-
+- 集計データを使ってグラフを作成します
+- 日本語フォントの使用について
+  - Matplotlibは日本語に対応していないので日本語を表示するためには日本語フォントを指定する必要があります
+  - [japanize_matplotlib](https://pypi.org/project/japanize-matplotlib/)ライブラリをインストールしてインポートします
 
 ```py
+# pipコマンドを使って japanize_matplotlib パッケージをインストール
+!pip install japanize_matplotlib
 
+# japanize_matplotlib パッケージをインポート
+import japanize_matplotlib
 ```
 
 ---
