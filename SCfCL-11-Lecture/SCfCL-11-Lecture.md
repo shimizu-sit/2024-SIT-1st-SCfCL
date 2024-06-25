@@ -39,7 +39,7 @@ paginate: true
 
 ## 解答例
 
-（第10回課題の解答例を作成したURLを貼る）
+https://colab.research.google.com/drive/1BN8_-3cvnWOEKBMtSmVQ-gVyd1qjLbTL?usp=sharing
 
 ---
 
@@ -92,7 +92,7 @@ customer.head()
 | ---------- | -------------- | ------------------------------------------------ |
 | CSV        | `read_csv()`   | 区切り文字で区切られたデータを読み込む           |
 | excel      | `read_excel()` | Excel形式のデータ（拡張子.xls，.xlsx）を読み込む |
-| json       | `read_json()`  | [JSON]()データを読み込む                         |
+| json       | `read_json()`  | JSONデータを読み込む                             |
 | html       | `read_html()`  | HTMLファイル内のテーブル形式のデータを読み込む   |
 
 （JSONのwikiの短縮URLを取得して貼り付ける）
