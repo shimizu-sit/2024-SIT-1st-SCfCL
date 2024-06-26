@@ -3,11 +3,11 @@ marp: true
 math: katex
 paginate: true
 ---
-<!-- スライドURL：https://docs.google.com/presentation/d/1uOo1fFzA0Z9ZambhJze-0ymoqm2VGo6yVRYnZl59YQ0/edit?usp=sharing --->
+<!-- スライドURL：https://docs.google.com/presentation/d/1XUATnBrZIBwo8H_1icovOrfhBgKgsO_vNra9aMHMfHs/edit?usp=sharing --->
 
 # コンピュータリテラシ発展 〜Pythonを学ぶ〜
 
-## 第11回：表計算やデータ分析をやってみよう
+## 第12回：いろんな業務を自動化してみよう
 
 情報学部 情報学科 情報メディア専攻
 清水 哲也 ( shimizu@info.shonan-it.ac.jp )
@@ -21,12 +21,15 @@ paginate: true
 # 今回の授業内容
 
 - 前回の課題解説
-- データの分析
-- データの可視化
+- 複数のExcelファイルに分散した売上データを分析する
+- フォルダの中のExcelファイルを読み込む
+- 各月ごとに分かれている売上データを連結する
+- 売上データと顧客流入元データを結合する
+- 顧客流入元ごとの売上合計を修正する
+- Excelファイルに集計データを出力する
 - 課題
 
 ---
-
 
 # 前回の課題解説
 
@@ -39,334 +42,250 @@ paginate: true
 
 ## 解答例
 
-https://colab.research.google.com/drive/1BN8_-3cvnWOEKBMtSmVQ-gVyd1qjLbTL?usp=sharing
+（第11回課題の解答例を作成してURLを貼る）
 
 ---
 
-# データの分析
+# 複数のExcelファイルに分散した売上データを分析する
+
+---
+
+# 目標
+
+- 月ごとの分かれた売上データ（Excelファイル）を集計します
+- 集計した売上データと顧客流入元データを結合します
+- 顧客流入元ごとの売上合計を集計します
 
 ---
 
 # データの準備
 
 - これから行う分析のためにデータを準備します
-- Moodleにある「**data_analysis.zip**」をダウンロードして解凍してください
-- Google Driveの作業場所に「**data_analysis**」フォルダごとアップロードします
-- 「**data_analysis**」の中身は次のとおりです
-  - 「customer.csv」
-  - 「item.csv」
-  - 「transaction_1.csv」
-  - 「transaction_2.csv」
+- Moodleにある「[excel.zip]()」をダウンロードして解凍してください
+- 作業場所に「**sales_analysis**」フォルダを作成してそこの「**excel**」フォルダをアップロードしてください．
+- 「**sales_analysis**」の中に「**excel**」フォルダがありようにしてください
+- 「**excel**」フォルダの中身は以下の通りです
+  - **2024年04月_売上.xlsx**
+  - **2024年05月_売上.xlsx**
+  - **2024年06月_売上.xlsx**
+  - **取引先流入元.xlsx**
 
 ---
 
-# データの読み込み
+# データの準備
 
-### 目標：商品の購買データと顧客データを組み合わせ，購買分析を行います
-- pandasを使ってデータを読み込み，顧客ID上位5名の顧客情報を表示させます
-- `read_csv()`関数：CSVファイルをpandasにデータを読み込ませます
-- 読み込んだデータはDataFrameオブジェクトとして扱うことができます
-- DataFrameオブジェクトの`head()`メソッドでデータの先頭5行を表示できます
+Colab上のフォルダ構成は以下のようになります．
+
+![](img/12-001.png)
+
+---
+
+# 各ファイルの中身
+
+- 「2024年04月_売上」と「2024年05月_売上」のスクショを貼る
+- Windowsでスクショをとる
+
+---
+
+# 各ファイルの中身
+
+- 「2024年06月_売上」と「取引先流入元」のスクショを貼る
+- Windowsでスクショをとる
+
+---
+
+# pythonファイルの作成
+
+- 今回は，Pythonファイル(.ipynb)を先程作成した「sales_analysis」ファルダ内に作成します
+- ファイル名は自由に決めてください
+
+---
+
+# フォルダの中のExcelファイルを読み込む
+
+---
+
+# 対象ファイルの一覧を取得
+
+- ExcelファイルをすべてPythonで読み込みます
+- 「excel」フォルダ内のファイルの一覧を取得します
 
 ```py
-import pandas as pd  # pandasモジュールをインポート
+# osモジュールをインポート
+import os
 
-# CSVファイルのパスを指定
-path = '/content/drive/MyDrive/???/data_analysis/customer.csv'
+# Excelファイルが保存されているフォルダのパスを指定
+folder_path = '/content/drive/MyDrive/???/sales_analysis/excel/'
 
-# 指定されたCSVファイルを読み込み，データフレームに格納
-customer = pd.read_csv(path)
+# 指定されたフォルダ内のファイル一覧を取得
+excel_files = os.listdir(folder_path)
 
-# データフレームの最初の5行を表示
-customer.head()
+# 取得したファイル一覧を表示
+excel_files
 ```
 
 ---
 
-# データの読み込み
+# 売上データを読み込み
 
-- データセットの読み込み関数
-- pandasでは各種データセットを読み込む関数が用意されています
+- Excelファイル内の売上データのみを読み込みます
+- pandasでExcelファイルを読み込むには`read_excel()`関数を使用します
 
-| データ形式 |      関数      |                       解説                       |
-| ---------- | -------------- | ------------------------------------------------ |
-| CSV        | `read_csv()`   | 区切り文字で区切られたデータを読み込む           |
-| excel      | `read_excel()` | Excel形式のデータ（拡張子.xls，.xlsx）を読み込む |
-| json       | `read_json()`  | JSONデータを読み込む                             |
-| html       | `read_html()`  | HTMLファイル内のテーブル形式のデータを読み込む   |
-
-（JSONのwikiの短縮URLを取得して貼り付ける）
-
----
-
-# データの読み込み
-
-- データの基本情報を確認します
-- pandasには，データの基本情報を簡単に表示するオプションも提供されています
-- DataFrameオブジェクトのオプションを以下の表にまとめます
-
-| オプション |                          解説                          |
-| ---------- | ------------------------------------------------------ |
-| `shape`    | 行数と列数を表示する（例:15行6列の場合，(15,6)と出力） |
-| `columns`  | 列名を表示する                                         |
-| `dtypes`   | 列名と，列のデータ型を表示                             |
-
-
----
-
-# データの結合
-
-- 以下の2つの結合方法について解説します
-  - データを縦方向に結合する処理
-  - 特定の列をキーにして横方向にデータを結合する処理
-
----
-
-# データの結合
-
-## データを縦方向に結合
-- `concat()`関数を使ってデータを縦に連結します
-  - **transaction_1.csv**と**transaction_2.csv**は同じ種別のデータを扱っています
-  - データ分析をする際に1つのデータとなっている方が扱いやすい
-  - この2つのデータを縦に連結します
-
----
-
-# データの結合
-
-- `concat()`関数でデータを縦に連結する
-  - `ignore_index`を`True`に指定することで，連結前のデータがもつインデックスラベルを無視し，新しくインデックスラベルを作成します
-  - `ignore_index`を`True`に指定しない場合（省略），元データのインデックスラベルをそのまま使用します
 
 ```py
-path = '/content/drive/MyDrive/???/data_analysis/'
+# pandasモジュールをインポート
+import pandas as pd
 
-# 指定されたCSVファイルを読み込み、データフレームに格納
-transaction_1 = pd.read_csv(path + 'transaction_1.csv')
-transaction_2 = pd.read_csv(path + 'transaction_2.csv')
+# 空のリストを作成、売上データを格納するためのリスト
+list_sales_data = []
 
-# 2つのデータフレームを結合し、新しいデータフレームに格納
-# ignore_index=True は、結合後のデータフレームのインデックスを再設定することを示す
-transaction = pd.concat([transaction_1, transaction_2], ignore_index=True)
+# フォルダ内のファイル一覧をループで処理
+for excel_file in excel_files:
+    # ファイル名に '売上' が含まれている場合に処理を実行
+    if '売上' in excel_file:
+        # Excelファイルを読み込み、データフレームに格納
+        sales_data = pd.read_excel(folder_path + excel_file)
+        # データフレームをリストに追加
+        list_sales_data.append(sales_data)
 
-transaction
+list_sales_data
 ```
 
 ---
 
-# データの結合
+# 取引先流入元データの読み込み
 
-## 特定の列をキーにして横方向にデータを結合
+- Excelファイル内の取引先流入元データのみを読み込みます
+- 対象ファイルが1つしかないので直接ファイル名を指定します
 
-- `merge()`関数で特定のキーをもとにデータを横に結合する
-  - transactionデータは顧客IDがある
-  - customerデータは顧客IDに紐づく顧客情報（顧客名，性別，年齢）がある
-  - 顧客IDをキーとして結合処理を行う
+```py
+# '取引先流入元.xlsx' ファイルのパスを指定
+sales_channel_file = folder_path + '取引先流入元.xlsx'
 
+# 指定されたExcelファイルを読み込み、データフレームに格納
+sales_channel = pd.read_excel(sales_channel_file)
+
+# 読み込んだデータフレームの内容を表示
+sales_channel
+```
 
 ---
 
-# データの結合
+# 各月ごとに分かれている売上データを連結する
 
-- `merge()`関数で特定のキーをもとにデータを横に結合します
-  - 引数`on`に特定キー（顧客ID）を指定します
-  - `concat()`関数とデータの指定方法は異なるので注意
+---
+
+# 各月ごとに分かれている売上データを連結する
+
+- 読み込んだ売上データを`concat()`関数を使って連結します
 
 ```py
-# transactionデータフレームとcustomerデータフレームを '顧客ID' 列でマージ
-# '顧客ID' 列の値が一致する行を結合して、新しいデータフレームを作成
-sales_data = pd.merge(transaction, customer, on='顧客ID')
+# list_sales_dataリストに格納されたすべてのデータフレームを結合し、
+# 1つのデータフレームにまとめる
+# ignore_index=True は、結合後のデータフレームの
+# インデックスを再設定することを示す
+sales_summary = pd.concat(list_sales_data, ignore_index=True)
+
+# 結合されたデータフレームの内容を表示
+sales_summary
+```
+
+---
+
+# プログラムをまとめる
+
+- Google Colabを利用している場合はまとめてもまとめまなくてもいいと思います
+- 自分のパソコンでpythonファイルを作成して実行する場合は1つのファイルにまとめた方がいいです
+- 一連の処理は関数にまとめると処理の内容がわかりやすいです
+
+https://colab.research.google.com/drive/1lucSLqnBv5ZSfBZlI1hffOxG0TGrM0ye?usp=sharing
+
+---
+
+# 売上データと顧客流入元データを結合する
+
+---
+
+# 売上データと顧客流入元データを結合する
+
+- 売上データと顧客流入元データを結合します
+- 2つのデータには「**取引先名**」があるのでこれをキーにします
+- pandasの`merge()`関数を使用します
+
+```py
+# sales_channelデータフレームとsales_summaryデータフレームを '取引先名' 列でマージ
+# '取引先名' 列の値が一致する行を結合して、新しいデータフレームを作成
+summary = pd.merge(sales_channel, sales_summary, on='取引先名')
 
 # マージされたデータフレームの内容を表示
-sales_data
+summary
 ```
 
 ---
 
-# データの集計
-
-- 合計を求める
-  - データの集計作業を行う
-  - 顧客IDごとの合計購買金額と合計購入数を求める
-  - `merge`した`sales_data`データを使う
-  - `groupby()`メソッドを使って特定のキーを指定する
-  - 合計購買金額 → 「購買金額」
-  - 合計購入数 → 「購入数」
-  - 合計 → `.sum()`
-
+# 顧客流入元ごとの売上合計を集計する
 
 ---
 
-# データの集計
+# 顧客流入元ごとの売上合計を集計する
 
-- 合計を求める
-  - データの集計作業を行う
-  - 顧客IDごとの合計購買金額と合計購入数を求める
+- 「**流入元**」をキーにして集計します
+- `groupby()`メソッドを使います
+- 売上合計なので`GroupBy`オブジェクトの`sum()`メソッドを使います
+- `sum()`の引数として`numeric_only=True`をいれます
 
 ```py
-# sales_data データフレームを '顧客ID' 列でグループ化し、
-# '購買金額' と '購入数' 列の合計を計算
-sales_per_customer = sales_data.groupby('顧客ID')[['購買金額', '購入数']].sum()
+# summaryデータフレームを '流入元' 列でグループ化し、数値列の合計を計算
+# numeric_only=True を指定して、数値列のみを対象にする
+sales_by_channel = summary.groupby('流入元').sum(numeric_only=True)
 
-# 顧客ごとの合計購買金額と合計購入数を含むデータフレームの内容を表示
-sales_per_customer
+# グループ化されたデータフレームの内容を表示
+sales_by_channel
 ```
 
 ---
 
-# データの集計
-
-- 合計を求める - データの集計作業を行う
-  - `groupby()`メソッドでグループ化された結果を`GroupBy`オブジェクトと呼ぶ
-  - `GroupBy`オブジェクトの他のメソッドを以下にまとめる
-
-|  メソッド名  |                                 解説                                 |
-| ------------ | -------------------------------------------------------------------- |
-| `count()`    | グループ化されたデータの個数を表示                                   |
-| `mean()`     | グループ化されたデータの平均値を表示                                 |
-| `sum()`      | グループ化されたデータの総和を表示                                   |
-| `describe()` | グループ化されたデータの統計情報を表示（例：最大値,標準偏差） |
+# Excelファイルに集計データを出力する
 
 ---
 
-# データの集計
+# Excelファイルに集計データを出力する
 
-- 平均を求める
-  - データの集計作業を行う
-  - `mean()`メソッドを使って「購買日」ごとの平均売上を求める
+- 出力するもの
+  - 売上データと顧客流入元データを結合したデータ（`summary`）
+  - 流入元ごとの売上データ（`sales_by_channel`）
+- pandasでExcelに書き出す時に複数シートにデータを書き出すには`ExcelWriter`オブジェクトを利用する
+- `to_excel()`メソッドで1シートずつ書き出します
 
+---
+
+# Excelファイルに集計データを出力する
+
+- 出力先は「**sales_analysis**」フォルダに指定します
+- `output_path`に出力先フォルダを設定します
 
 ```py
-# sales_data データフレームを '購買日' 列でグループ化し、
-# '購買金額' 列の平均を計算
-sales_per_day = sales_data.groupby('購買日').購買金額.mean()
+# 出力ファイルのパスを指定
+output_path = '/content/drive/MyDrive/???/sales_analysis/'
 
-# 日ごとの平均購買金額を含むデータフレームの内容を表示
-sales_per_day
-
+# ExcelWriterを使用して、複数のデータフレームを1つのExcelファイルに保存
+with pd.ExcelWriter(output_path + 'summary.xlsx') as writer:
+    # summaryデータフレームを '売上サマリー' シートに書き込み
+    summary.to_excel(writer, sheet_name='売上サマリー')
+    
+    # sales_by_channelデータフレームを '流入元ごとの売上' シートに書き込み
+    sales_by_channel.to_excel(writer, sheet_name='流入元ごとの売上')
 ```
 
 ---
 
-# データの可視化
+# プログラムをまとめる
 
----
+- Google Colabを利用している場合はまとめてもまとめまなくてもいいと思います
+- 自分のパソコンでpythonファイルを作成して実行する場合は1つのファイルにまとめた方がいいです
+- 一連の処理は関数にまとめると処理の内容がわかりやすいです
 
-# データを可視化するためのライブラリ
-
-- 集計データを使ってグラフを作成します
-- 使用するライブラリ
-  - [Matplotlib](https://matplotlib.org/)
-    - Pythonでグラフを描くための基本的なライブラリ
-    - グラフの基本的な設定を行う
-  - [seaborn](https://seaborn.pydata.org/)
-    - Matplotlibをベースにしたより複雑な可視化を簡単に行うことができるライブラリ
-
-
----
-
-# データを可視化するためのライブラリ
-
-- 集計データを使ってグラフを作成します
-- **Matplotlib**も**seaborn**もColabにはインストール済みです
-- インポートする必要があります
-
-```py
-# matplotlibモジュールのpyplotサブモジュールをインポート（グラフ描画のためのツール）
-from matplotlib import pyplot as plt
-
-# seabornモジュールをインポート（データの可視化を行うための高レベルなインターフェース）
-import seaborn as sns  
-```
-
----
-
-# データを可視化するためのライブラリ
-
-- 集計データを使ってグラフを作成します
-- 日本語フォントの使用について
-  - Matplotlibは日本語に対応していないので日本語を表示するためには日本語フォントを指定する必要があります
-  - [japanize_matplotlib](https://pypi.org/project/japanize-matplotlib/)ライブラリをインストールしてインポートします
-
-```py
-# pipコマンドを使って japanize_matplotlib パッケージをインストール
-!pip install japanize_matplotlib
-
-# japanize_matplotlib パッケージをインポート
-import japanize_matplotlib
-```
-
----
-
-# データを可視化するためのライブラリ
-
-- 集計データを使ってグラフを作成する
-- **sales_per_customer**データを棒グラフで表示します
-- `barplot()`関数を使用します
-- 引数「**data**」に対象のDataFrameオブジェクトを指定する
-
-
-```py
-# 顧客ごとの合計購買金額を棒グラフで表示
-# x軸に顧客ID、y軸に購買金額を指定
-ax = sns.barplot(x=sales_per_customer.index, y='購買金額', data=sales_per_customer)
-```
-
----
-
-# データを可視化するためのライブラリ
-
-- 集計データを使ってグラフを作成する
-- **sales_per_day**データを折れ線グラフで表示する
-- `lineplot()`関数を使用する
-- 引数「**data**」に対象のDataFrameオブジェクトを指定する
-
-```py
-# 日ごとの平均購買金額を折れ線グラフで表示
-# data引数にsales_per_dayデータフレームを指定
-ax = sns.lineplot(data=sales_per_day)
-```
-
----
-
-# データを可視化するためのライブラリ
-
-- グラフのサイズを調整する
-  - x軸のデータ表示が重なってしまい見づらいのでグラフを横に広くします
-  - **Matplotlib**の設定で修正可能
-  - `figure()`関数の`figsize`引数を指定する
-
-```py
-# グラフのサイズを指定（幅18、高さ4）
-plt.figure(figsize=(18, 4))
-
-# 日ごとの平均購買金額を折れ線グラフで表示
-# data引数にsales_per_dayデータフレームを指定
-ax = sns.lineplot(data=sales_per_day)
-```
-
----
-
-# データを可視化するためのライブラリ
-
-- グラフの表示を設定
-  - `set_title()`メソッド：グラフタイトルを指定
-  - `set()`メソッド：引数`xlabel`，`ylabel`を指定してx軸，y軸のラベルを作成
-
-```py
-# グラフのサイズを指定（幅18、高さ4）
-plt.figure(figsize=(18, 4))
-
-# 日ごとの平均購買金額を折れ線グラフで表示
-# data引数にsales_per_dayデータフレームを指定
-ax = sns.lineplot(data=sales_per_day)
-
-# グラフのタイトルを設定
-ax.set_title('購買日ごとの平均売上')
-
-# x軸とy軸のラベルを設定
-ax.set(xlabel='購買日', ylabel='平均売上（円）')
-```
+https://colab.research.google.com/drive/122_uRzAECbfEJLcpUiLgdkCRSANpO8zI?usp=sharing
 
 ---
 
@@ -374,9 +293,9 @@ ax.set(xlabel='購買日', ylabel='平均売上（円）')
 
 ---
 
-# 課題
+# 課題12
 
-- Moodleにある「SCfCL-11-prac.ipynb」ファイルをダウンロードしてColabにアップロードしてください
-- 課題が完了したら「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
+- 今回の授業でやったことを提出してください
+- 実行したら，「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** をMoodleに提出してください
-- 提出期限は **7月4日(木) 20時まで** です
+- 提出期限は **7月11日(木) 20時まで** です
