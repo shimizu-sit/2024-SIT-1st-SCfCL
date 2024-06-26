@@ -92,10 +92,9 @@ customer.head()
 | ---------- | -------------- | ------------------------------------------------ |
 | CSV        | `read_csv()`   | 区切り文字で区切られたデータを読み込む           |
 | excel      | `read_excel()` | Excel形式のデータ（拡張子.xls，.xlsx）を読み込む |
-| json       | `read_json()`  | JSONデータを読み込む                             |
+| json       | `read_json()`  | [JSON](https://w.wiki/4oeK)データを読み込む      |
 | html       | `read_html()`  | HTMLファイル内のテーブル形式のデータを読み込む   |
 
-（JSONのwikiの短縮URLを取得して貼り付ける）
 
 ---
 
