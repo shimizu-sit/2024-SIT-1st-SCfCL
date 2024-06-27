@@ -61,7 +61,7 @@ paginate: true
 # データの準備
 
 - これから行う分析のためにデータを準備します
-- Moodleにある「[excel.zip]()」をダウンロードして解凍してください
+- Moodleにある「[excel.zip](https://moodle2024.shonan-it.ac.jp/mod/resource/view.php?id=8713)」をダウンロードして解凍してください
 - 作業場所に「**sales_analysis**」フォルダを作成してそこの「**excel**」フォルダをアップロードしてください．
 - 「**sales_analysis**」の中に「**excel**」フォルダがありようにしてください
 - 「**excel**」フォルダの中身は以下の通りです
