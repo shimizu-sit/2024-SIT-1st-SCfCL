@@ -42,7 +42,7 @@ paginate: true
 
 ## 解答例
 
-（第11回課題の解答例を作成してURLを貼る）
+https://colab.research.google.com/drive/12yBqHP4CRdVDmtaAXtgwE3xyHRjwsGYI?usp=sharing
 
 ---
 
@@ -52,7 +52,7 @@ paginate: true
 
 # 目標
 
-- 月ごとの分かれた売上データ（Excelファイル）を集計します
+- 月ごとに分かれた売上データ（Excelファイル）を集計します
 - 集計した売上データと顧客流入元データを結合します
 - 顧客流入元ごとの売上合計を集計します
 
@@ -63,7 +63,7 @@ paginate: true
 - これから行う分析のためにデータを準備します
 - Moodleにある「[excel.zip](https://moodle2024.shonan-it.ac.jp/mod/resource/view.php?id=8713)」をダウンロードして解凍してください
 - 作業場所に「**sales_analysis**」フォルダを作成してそこの「**excel**」フォルダをアップロードしてください．
-- 「**sales_analysis**」の中に「**excel**」フォルダがありようにしてください
+- 「**sales_analysis**」の中に「**excel**」フォルダがあるようにしてください
 - 「**excel**」フォルダの中身は以下の通りです
   - **2024年04月_売上.xlsx**
   - **2024年05月_売上.xlsx**
