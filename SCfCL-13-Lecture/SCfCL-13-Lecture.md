@@ -43,33 +43,34 @@ paginate: true
 
 ## 解答例
 
-（第11回課題の解答例を作成してURLを貼る）
+（第12回課題の解答例を作成してURLを貼る）
 
 ---
 
-# 複数のExcelファイルに分散した売上データを分析する
+# 特定のルールに従って，フォルダ構成を整理する
 
 ---
 
-# 目標
+# 問題点と目標
 
-- 月ごとの分かれた売上データ（Excelファイル）を集計します
-- 集計した売上データと顧客流入元データを結合します
-- 顧客流入元ごとの売上合計を集計します
+## 問題点
+- ファイルとフォルダの管理ルールが不適切
+- 請求書のファイル名が不規則かつ，ファイルが分散している
+
+## 目標
+- 請求書は「**請求書_会社名+様+YYYY年MM月**」に統一
+- お客様の会社ごとにフォルダを作成
+- 請求書以外のファイルは移動操作を行わない
 
 ---
 
 # データの準備
 
 - これから行う分析のためにデータを準備します
-- Moodleにある「[excel.zip](https://moodle2024.shonan-it.ac.jp/mod/resource/view.php?id=8713)」をダウンロードして解凍してください
-- 作業場所に「**sales_analysis**」フォルダを作成してそこの「**excel**」フォルダをアップロードしてください．
-- 「**sales_analysis**」の中に「**excel**」フォルダがありようにしてください
-- 「**excel**」フォルダの中身は以下の通りです
-  - **2024年04月_売上.xlsx**
-  - **2024年05月_売上.xlsx**
-  - **2024年06月_売上.xlsx**
-  - **取引先流入元.xlsx**
+- Moodleにある「**before.zip**」をダウンロードして解凍してください
+- 作業場所に「**organize_data**」フォルダを作成してそこの「**before**」フォルダをアップロードしてください
+- 「**organize_data**」の中に「**before**」フォルダがあり，その中に「**佐藤**」と「**田中**」フォルダがあります
+
 
 ---
 
@@ -77,20 +78,21 @@ paginate: true
 
 Colab上のフォルダ構成は以下のようになります．
 
-![](img/12-001.png)
+**※Colab上のファイル構造のスクショを貼り付ける**
 
 ---
 
-# 各ファイルの中身
+# 「佐藤」フォルダの各ファイルの中身
 
-|    2024年04月_売上.xlsx    |    2024年05月_売上.xlsx    |
+|    佐藤/タスク管理.xlsx    |    佐藤/請求書_xxxxxxx_DEF商事様.xlsx    |
 | -------------------------- | -------------------------- |
 | ![h:300](./img/12-002.png) | ![h:300](./img/12-003.png) |
 
 
 ---
 
-# 各ファイルの中身
+# 「田中」フォルダの各ファイルの中身
+要修正
 
 |    2024年06月_売上.xlsx    |    取引先流入元.xlsx    |
 | -------------------------- | -------------------------- |
@@ -100,166 +102,113 @@ Colab上のフォルダ構成は以下のようになります．
 
 # pythonファイルの作成
 
-- 今回は，Pythonファイル(.ipynb)を先程作成した「sales_analysis」ファルダ内に作成します
+- 今回はPythonファイル(.ipynb)を先程作成した「**organize_data**」ファルダ内に作成します
 - ファイル名は自由に決めてください
 
----
-
-# フォルダの中のExcelファイルを読み込む
 
 ---
 
-# 対象ファイルの一覧を取得
+# 作業用フォルダにすべてのファイルをコピーする
 
-- ExcelファイルをすべてPythonで読み込みます
-- 「excel」フォルダ内のファイルの一覧を取得します
+---
+
+# 作業用フォルダにすべてのファイルをコピーする
+
+- ファイル名の変更等作業時にファイル誤削除の危険があるため、まず作業用フォルダを作成します
+- 作業用フォルダは「**after**」という名前で作成します
+- すべてのファイルをこの作業用フォルダにコピーします
+- フォルダのコピーには**shutil**モジュールの**copytree()**関数を使用
+- 同じ処理を2回実行すると2回目はフォルダが既に存在するためエラーが発生します
+- プログラムを何度実行してもエラーで処理が終了しないように例外処理を組み込みます
+
+---
+
+# 作業用フォルダにすべてのファイルをコピーする
 
 ```py
-# osモジュールをインポート
-import os
-
-# Excelファイルが保存されているフォルダのパスを指定
-folder_path = '/content/drive/MyDrive/???/sales_analysis/excel/'
-
-# 指定されたフォルダ内のファイル一覧を取得
-excel_files = os.listdir(folder_path)
-
-# 取得したファイル一覧を表示
-excel_files
+import shutil
+ 
+org_path = '/content/drive/MyDrive/???/organize_data/' 
+ 
+try:
+  shutil.copytree(org_path + 'before', org_path + 'after')
+except FileExistsError as e:
+  print('すでにafterフォルダが存在します')
 ```
 
 ---
 
-# 売上データを読み込み
+# 作業用フォルダにすべてのファイルをコピーする
 
-- Excelファイル内の売上データのみを読み込みます
-- pandasでExcelファイルを読み込むには`read_excel()`関数を使用します
+Google Drive上に新しく「after」フォルダが生成されたスクショを貼る
 
+---
+
+# すべてのファイルを取得する
+
+---
+
+# すべてのファイルを取得する
+
+- 「**after**」フォルダ内のすべてのファイルを取得します
+- 請求書ファイルは「**佐藤**」と「**田中**」のフォルダに分かれています
+- `os`モジュールの`listdir()`関数を使用するとフォルダ名のみ取得しファイル名は一度に取得できません
+- 今回の場合`glob`モジュールを用いた再帰的な検索を行います
+
+---
+
+# すべてのファイルを取得する
+
+取得したファイルリストを表示します
 
 ```py
-# pandasモジュールをインポート
-import pandas as pd
-
-# 空のリストを作成、売上データを格納するためのリスト
-list_sales_data = []
-
-# フォルダ内のファイル一覧をループで処理
-for excel_file in excel_files:
-    # ファイル名に '売上' が含まれている場合に処理を実行
-    if '売上' in excel_file:
-        # Excelファイルを読み込み、データフレームに格納
-        sales_data = pd.read_excel(folder_path + excel_file)
-        # データフレームをリストに追加
-        list_sales_data.append(sales_data)
-
-list_sales_data
+import glob
+ 
+files = glob.glob(org_path + 'after/**', recursive=True)
+ 
+files
 ```
 
 ---
 
-# 取引先流入元データの読み込み
+# 取得したファイルが請求書ファイルかどうか判別する
 
-- Excelファイル内の取引先流入元データのみを読み込みます
-- 対象ファイルが1つしかないので直接ファイル名を指定します
+---
+
+# 取得したファイルが請求書ファイルかどうか判別する
+
+-  「請求書以外のファイルは移動しない」というルールに従いファイルが請求書かどうかを判別する処理が必要になります
+-  請求書ファイルかどうかを判断するためExcelファイルのシート名に「請求書」が含まれているかを確認します
+-  この確認作業には`OpenPyXL`ライブラリを利用する
+
+
+---
+
+# 拡張子が「.xlsx」かどうかの確認
+
+- OpenPyXLを使用するにはファイルの拡張子が「**.xlsx**」である必要があります
+- OpenPyXLを使用して開けるファイルかどうかを確認する処理を実施します
 
 ```py
-# '取引先流入元.xlsx' ファイルのパスを指定
-sales_channel_file = folder_path + '取引先流入元.xlsx'
-
-# 指定されたExcelファイルを読み込み、データフレームに格納
-sales_channel = pd.read_excel(sales_channel_file)
-
-# 読み込んだデータフレームの内容を表示
-sales_channel
+def check_excel_file(file):
+  if '.xlsx' in file:
+    return True
+  else:
+    return False
+ 
+for file in files:
+  if check_excel_file(file):
+    print('「' + file + '」はExcelです．')
+  else:
+    print('「' + file + '」はExcelではないです．')
 ```
 
 ---
 
-# 各月ごとに分かれている売上データを連結する
+# シート名が「請求書」かどうかを確認
 
----
-
-# 各月ごとに分かれている売上データを連結する
-
-- 読み込んだ売上データを`concat()`関数を使って連結します
-
-```py
-# list_sales_dataリストに格納されたすべてのデータフレームを結合し、
-# 1つのデータフレームにまとめる
-# ignore_index=True は、結合後のデータフレームの
-# インデックスを再設定することを示す
-sales_summary = pd.concat(list_sales_data, ignore_index=True)
-
-# 結合されたデータフレームの内容を表示
-sales_summary
-```
-
----
-
-# プログラムをまとめる
-
-- Google Colabを利用している場合はまとめてもまとめまなくてもいいと思います
-- 自分のパソコンでpythonファイルを作成して実行する場合は1つのファイルにまとめた方がいいです
-- 一連の処理は関数にまとめると処理の内容がわかりやすいです
-
-https://colab.research.google.com/drive/1lucSLqnBv5ZSfBZlI1hffOxG0TGrM0ye?usp=sharing
-
----
-
-# 売上データと顧客流入元データを結合する
-
----
-
-# 売上データと顧客流入元データを結合する
-
-- 売上データと顧客流入元データを結合します
-- 2つのデータには「**取引先名**」があるのでこれをキーにします
-- pandasの`merge()`関数を使用します
-
-```py
-# sales_channelデータフレームとsales_summaryデータフレームを '取引先名' 列でマージ
-# '取引先名' 列の値が一致する行を結合して、新しいデータフレームを作成
-summary = pd.merge(sales_channel, sales_summary, on='取引先名')
-
-# マージされたデータフレームの内容を表示
-summary
-```
-
----
-
-# 顧客流入元ごとの売上合計を集計する
-
----
-
-# 顧客流入元ごとの売上合計を集計する
-
-- 「**流入元**」をキーにして集計します
-- `groupby()`メソッドを使います
-- 売上合計なので`GroupBy`オブジェクトの`sum()`メソッドを使います
-- `sum()`の引数として`numeric_only=True`をいれます
-
-```py
-# summaryデータフレームを '流入元' 列でグループ化し、数値列の合計を計算
-# numeric_only=True を指定して、数値列のみを対象にする
-sales_by_channel = summary.groupby('流入元').sum(numeric_only=True)
-
-# グループ化されたデータフレームの内容を表示
-sales_by_channel
-```
-
----
-
-# Excelファイルに集計データを出力する
-
----
-
-# Excelファイルに集計データを出力する
-
-- 出力するもの
-  - 売上データと顧客流入元データを結合したデータ（`summary`）
-  - 流入元ごとの売上データ（`sales_by_channel`）
-- pandasでExcelに書き出す時に複数シートにデータを書き出すには`ExcelWriter`オブジェクトを利用する
-- `to_excel()`メソッドで1シートずつ書き出します
+- 請求書かどうかを判断する処理を行います
+- Excelファイルのシート名を取得する`sheetnames`属性を指定します
 
 ---
 
@@ -268,17 +217,185 @@ sales_by_channel
 - 出力先は「**sales_analysis**」フォルダに指定します
 - `output_path`に出力先フォルダを設定します
 
-```py
-# 出力ファイルのパスを指定
-output_path = '/content/drive/MyDrive/???/sales_analysis/'
+---
 
-# ExcelWriterを使用して、複数のデータフレームを1つのExcelファイルに保存
-with pd.ExcelWriter(output_path + 'summary.xlsx') as writer:
-    # summaryデータフレームを '売上サマリー' シートに書き込み
-    summary.to_excel(writer, sheet_name='売上サマリー')
-    
-    # sales_by_channelデータフレームを '流入元ごとの売上' シートに書き込み
-    sales_by_channel.to_excel(writer, sheet_name='流入元ごとの売上')
+# Excelファイルに集計データを出力する
+
+```py
+import openpyxl
+ 
+invoice_sheet_name = '請求書'
+ 
+def check_invoice_excel_file(wb):
+  if invoice_sheet_name in wb.sheetnames:
+    return True
+  else:
+    return False
+ 
+for file in files:
+  if check_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    if check_invoice_excel_file(wb):
+      print('「' + file + '」は請求書です．')
+    else:
+      print('「' + file + '」は請求書ではないです．')
+  else:
+    print('「' + file + '」はExcelではないです．')
+
+```
+
+---
+
+# 新しいファイル名とフォルダ名を取得する
+
+---
+
+# 新しいファイル名とフォルダ名を取得する
+
+- 新しい請求書ファイル名のフォーマットは「**請求書_会社名+様_YYYY年MM月**」とします
+- 「**YYYY年MM月**」は請求書の発行年月を表します
+- **会社名**と**請求書発行年月**はExcelファイルの**B2セル**と**B5セル**からそれぞれ取得します
+
+---
+
+# 会社名を取得する
+
+- OpenPyXLで請求書シートの**B2セル**の値を`name`と名付けてとりだします
+
+```py
+corporate_name_cell = 'B2'
+ 
+def get_invoice_corporate_name(wb):
+  name = wb[invoice_sheet_name][corporate_name_cell].value
+  return name
+ 
+for file in files:
+  if check_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    if check_invoice_excel_file(wb):
+      name = get_invoice_corporate_name(wb)
+      print(name)
+
+```
+
+---
+
+# 請求書の発行年月を取得する
+
+- 請求書発行月の取得はExcelファイルのB5セルから取得します
+- B5セルの値は「**日付YYYY/MM**」というフォーマットになっています
+- 正規表現「`\d\d\d\d/\d\d`」を用いて「**YYYY/MM**」という必要な情報のみを「`date`」という名前で取り出します
+
+---
+
+# 請求書の発行年月を取得する
+
+```py
+import re
+ 
+invoice_created_date_cell = 'B5'
+ 
+def get_invoice_created_date(wb):
+  value = wb[invoice_sheet_name][invoice_created_date_cell].value
+ 
+  invoice_created_date_regex = re.compile(r'\d\d\d\d/\d\d')
+  invoice_created_date_match = invoice_created_date_regex.search(value)
+ 
+  date = invoice_created_date_match.group()
+  return date
+ 
+for file in files:
+  if check_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    if check_invoice_excel_file(wb):
+      date = get_invoice_created_date(wb)
+      print(date)
+```
+
+---
+
+# 請求書ファイル名をフォーマット通りの形にする
+
+- 会社名と請求書発行月を取得した後`format()`メソッドを使用してこれらの情報を結合します
+- `get_invoice_created_date()`関数で取得した日付のフォーマット（例：2020/02）を最終的なフォーマット（例：2020年02月）に変換します
+- 日付フォーマットの変換には**スライス記法**を利用します
+
+---
+
+# 請求書ファイル名をフォーマット通りの形にする
+
+```py
+def get_new_invoice_file_name(wb):
+  invoice_corporate_name = get_invoice_corporate_name(wb)
+  invoice_created_date = get_invoice_created_date(wb)
+ 
+  formatted_date='{0}年{1}月'.format(invoice_created_date[0:4],invoice_created_date[5:7])
+ 
+  file_name='請求書_{0}様_{1}'.format(invoice_corporate_name,formatted_date)
+  file_name_with_ext=file_name+'.xlsx'
+  return file_name_with_ext,invoice_corporate_name
+ 
+for file in files:
+  if check_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    if check_invoice_excel_file(wb):
+      new_file_name,new_dir_name=get_new_invoice_file_name(wb)
+      print(new_file_name, new_dir_name)
+```
+
+---
+
+# 新しいフォルダを作成する
+
+---
+
+# 新しいフォルダを作成する
+
+- 会社名のフォルダ作成には`os`モジュールの`makedirs()`関数を使用します
+- フォルダ作成処理は請求書ファイルの数だけ複数回実行されます
+- 既に存在するフォルダで処理が失敗しないように引数`exist_ok`を`True`に設定します
+
+---
+
+# 新しいフォルダを作成する
+
+```py
+import os
+ 
+def make_new_invoice_dir(invoice_corporate_name):
+  dir_path = org_path + 'after/' + invoice_corporate_name
+  os.makedirs(dir_path,exist_ok=True)
+  return dir_path
+ 
+for file in files:
+  if check_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    if check_invoice_excel_file(wb):
+      new_file_name,new_dir_name=get_new_invoice_file_name(wb)
+      new_dir_path = make_new_invoice_dir(new_dir_name)
+ 
+new_dir = os.listdir(org_path + 'after/')
+new_dir
+```
+
+---
+
+# ファイル名変更とフォルダ移動を行う
+
+---
+
+# ファイル名変更とフォルダ移動を行う
+
+- ファイル名変更とフォルダ移動は`shutil`モジュールの`move()`関数で同時に実行できます
+
+```py
+for file in files:
+  if check_excel_file(file):
+    wb = openpyxl.load_workbook(file)
+    if check_invoice_excel_file(wb):
+      new_file_name,new_dir_name=get_new_invoice_file_name(wb)
+      new_dir_path = make_new_invoice_dir(new_dir_name)
+      shutil.move(file, new_dir_path+'/'+new_file_name)
 ```
 
 ---
@@ -288,8 +405,8 @@ with pd.ExcelWriter(output_path + 'summary.xlsx') as writer:
 - Google Colabを利用している場合はまとめてもまとめまなくてもいいと思います
 - 自分のパソコンでpythonファイルを作成して実行する場合は1つのファイルにまとめた方がいいです
 - 一連の処理は関数にまとめると処理の内容がわかりやすいです
+- （まとめたプログラムのURLを貼り付ける）
 
-https://colab.research.google.com/drive/122_uRzAECbfEJLcpUiLgdkCRSANpO8zI?usp=sharing
 
 ---
 
@@ -297,9 +414,9 @@ https://colab.research.google.com/drive/122_uRzAECbfEJLcpUiLgdkCRSANpO8zI?usp=sh
 
 ---
 
-# 課題12
+# 課題13
 
 - 今回の授業でやったことを提出してください
 - 実行したら，「File」>「Download」>「Download .ipynb」で「.ipynb」形式でダウンロードしてください
 - ダウンロードした **.ipynbファイル** をMoodleに提出してください
-- 提出期限は **7月11日(木) 20時まで** です
+- 提出期限は **7月18日(木) 20時まで** です
