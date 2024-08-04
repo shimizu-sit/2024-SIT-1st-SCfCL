@@ -267,14 +267,6 @@ for file in files:
 # チェックするセルの位置を指定
 corporate_name_cell = 'B2'
 
-# 指定されたExcelファイルに請求書シートがあるかどうかをチェックする関数を定義
-def check_invoice_excel_file(wb):
-    # ワークブックのシート名一覧に '請求書' が含まれているかをチェック
-    if invoice_sheet_name in wb.sheetnames:
-        return True  # '請求書' シートがある
-    else:
-        return False  # '請求書' シートがない
-
 # ワークブックから請求書シートの企業名を取得する関数を定義
 def get_invoice_corporate_name(wb):
     # '請求書' シートの指定されたセルの値を取得
@@ -300,12 +292,12 @@ for file in files:
 # 請求書の発行年月を取得する
 
 - 請求書発行月の取得はExcelファイルのB5セルから取得します
-- B5セルの値は「**日付YYYY/MM**」というフォーマットになっています
+- B5セルの値は「**日付 YYYY/MM**」というフォーマットになっています
 - 正規表現「`\d\d\d\d/\d\d`」を用いて「**YYYY/MM**」という必要な情報のみを「`date`」という名前で取り出します
 
 ---
 
-# 請求書の発行年月を取得する(1/3)
+# 請求書の発行年月を取得する(1/2)
 
 ```py
 import re  # reモジュールをインポート（正規表現操作を行うためのモジュール）
@@ -313,20 +305,6 @@ import re  # reモジュールをインポート（正規表現操作を行う�
 # チェックするセルの位置を指定
 invoice_created_date_cell = 'B5'
 
-# 指定されたExcelファイルに請求書シートがあるかどうかをチェックする関数を定義
-def check_invoice_excel_file(wb):
-    # ワークブックのシート名一覧に '請求書' が含まれているかをチェック
-    if invoice_sheet_name in wb.sheetnames:
-        return True  # '請求書' シートがある
-    else:
-        return False  # '請求書' シートがない
-```
-
----
-
-# 請求書の発行年月を取得する(2/3)
-
-```py
 # ワークブックから請求書シートの作成日を取得する関数を定義
 def get_invoice_created_date(wb):
     # '請求書' シートの指定されたセルの値を取得
@@ -344,7 +322,7 @@ def get_invoice_created_date(wb):
 
 ---
 
-# 請求書の発行年月を取得する(3/3)
+# 請求書の発行年月を取得する(2/2)
 
 ```py
 # ファイルリストをループで処理
